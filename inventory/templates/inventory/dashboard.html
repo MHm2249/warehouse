@@ -1,0 +1,40 @@
+{% extends 'inventory/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Warehouse Dashboard</h2>
+    
+    {% if warehouse_items %}
+    <div class="row">
+        {% for item in warehouse_items %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                    {{ item.product.name }}
+                </div>
+                <div class="card-body">
+                    <p><strong>barcode:</strong> {{ item.product.barcode }}</p>
+                    <p><strong>Category:</strong> {{ item.product.category }}</p>
+                    <p><strong>Current Stock:</strong> 
+                        <span class="badge bg-{% if item.stock > 10 %}success{% else %}warning{% endif %}">
+                            {{ item.stock }} units
+                        </span>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    Last updated: {{ item.last_updated|timesince }} ago
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-warning">
+        No inventory items found. Add products and transactions first.
+    </div>
+    {% endif %}
+</div>
+<span class="badge bg-{% if item.stock > 10 %}success{% elif item.stock > 0 %}warning{% else %}danger{% endif %}">
+    {{ item.stock }} units
+</span>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'inventory/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">
+                {% if form.instance.pk %}
+                <i class="fas fa-edit"></i> Edit Product
+                {% else %}
+                <i class="fas fa-plus"></i> Add New Product
+                {% endif %}
+            </h3>
+        </div>
+        <div class="card-body">
+            <form method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form.name|as_crispy_field }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.barcode|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form.category|as_crispy_field }}
+                    </div>
+                    <div class="col-md-12">
+                        {{ form.description|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Product
+                    </button>
+                    <a href="{% url 'product-list' %}" class="btn btn-outline-secondary">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

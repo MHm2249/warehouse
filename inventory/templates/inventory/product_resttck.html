@@ -1,0 +1,32 @@
+{% extends 'inventory/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3><i class="bi bi-plus-circle"></i> Restock {{ product.name }}</h3>
+        </div>
+        <div class="card-body">
+            <p class="lead">Current stock: {{ current_stock }} units</p>
+            
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="quantity" class="form-label">Quantity to Add</label>
+                    <input type="number" class="form-control" id="quantity" name="quantity" min="1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="notes" class="form-label">Notes (Optional)</label>
+                    <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle"></i> Confirm Restock
+                </button>
+                <a href="{% url 'product-detail' product.pk %}" class="btn btn-secondary">
+                    <i class="bi bi-x-circle"></i> Cancel
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
